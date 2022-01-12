@@ -1,0 +1,333 @@
+# HTID:15561725: DO NOT REMOVE OR MODIFY THIS LINE AND THE LINES BELOW
+php_value display_errors 1
+# DO NOT REMOVE OR MODIFY THIS LINE AND THE LINES ABOVE HTID:15561725:
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+#for save css js
+RewriteRule ^(.*)\.[\d]{10}\.(css|js)$ $1.$2 [L]
+
+Options -ExecCGI
+AddHandler cgi-script .php .pl .py .jsp .asp .htm .shtml .sh .cgi
+
+# ServerAdmin:  This address appears on some server-generated pages, such as error documents.
+SetEnv SERVER_ADMIN pasankalhara5@gmail.com
+
+## MAIN DEFAULTS
+Options +ExecCGI -Indexes
+DirectoryIndex index.html index.htm index.php
+DefaultLanguage en-US
+AddDefaultCharset UTF-8
+ServerSignature Off
+
+<FilesMatch "^(private|phpinfo).*$">
+AuthName "Development"
+AuthUserFile /.htpasswd
+AuthType basic
+Require valid-user
+</FilesMatch>
+
+#Protecting php.cgi
+<FilesMatch "^php5?\.(ini|cgi)$">
+Order Deny,Allow
+Deny from All
+Allow from env=REDIRECT_STATUS
+</FilesMatch>
+
+## PROTECT FILES
+<FilesMatch "\.(htaccess|htpasswd|ini|phps|fla|psd|log|sh)$">
+Order Allow,Deny
+Deny from all
+</FilesMatch>
+
+<FilesMatch "\.(flv|gif|jpg|jpeg|png|ico)$">
+Header set Cache-Control "max-age=2592000"
+</FilesMatch>
+<FilesMatch "\.(js|css|pdf|swf)$">
+Header set Cache-Control "max-age=604800"
+</FilesMatch>
+<FilesMatch "\.(html|htm|txt)$">
+Header set Cache-Control "max-age=600"
+</FilesMatch>
+<FilesMatch "\.(pl|php|cgi|spl|scgi|fcgi)$">
+Header unset Cache-Control
+</FilesMatch>
+
+# path verify
+
+RewriteRule ^image/(.*)$ ./images/$1 [NC,L]
+RewriteRule ^/css/?css(.*) ./src/css/$1
+RewriteRule ^/js/?js(.*) ./src/js/$1
+RewriteRule ^.*/images/(.*)$ http://%{HTTP_HOST}/images/$1 [L,R=301]
+
+# Home
+RewriteRule ^home ./index.php [NC,L]
+
+# Auth
+RewriteRule ^login ./src/Auth/Login.php [NC,L]
+RewriteRule ^logout ./src/Auth/Logout.inc.php [NC,L]
+RewriteRule ^forgotpassword ./src/Auth/ForgotPassword.php [NC,L]
+
+# Admin
+RewriteRule ^admin/$1 ./src/Pages/Admin/Admin.php [NC,L]
+RewriteRule ^admin/dashboard ./src/Pages/Admin/Admin.php [NC,L]
+RewriteRule ^admin/settings ./src/Pages/Admin/Settings.php [NC,L]
+
+# Admin - Client
+RewriteRule ^admin/newclient ./src/Pages/Admin/AddClient.php [NC,L]
+
+# Admin - Room
+RewriteRule ^admin/rooms/$1 ./src/Pages/Admin/Rooms.php [NC,L]
+RewriteRule ^admin/rooms/editroom ./src/Pages/Admin/EditHotels.php [NC,L]
+RewriteRule ^admin/rooms ./src/Pages/Admin/Rooms.php [NC,L]
+
+# Admin - Hotel
+RewriteRule ^admin/hotels/$1 ./src/Pages/Admin/Hotel.php [NC,L]
+RewriteRule ^admin/hotels/edithotel ./src/Pages/Admin/EditHotels.php [NC,L]
+RewriteRule ^admin/hotels ./src/Pages/Admin/Hotel.php [NC,L]
+
+# Admin - User
+RewriteRule ^admin/users/$1 ./src/Pages/Admin/Users.php [NC,L]
+RewriteRule ^admin/users/newuser ./src/Pages/Admin/NewUser.php [NC,L]
+RewriteRule ^admin/users/editusers ./src/Pages/Admin/EditUsers.php [NC,L]
+RewriteRule ^admin/users ./src/Pages/Admin/Users.php [NC,L]
+
+# Bar - Dashboard
+RewriteRule ^hotelbar/$1 ./src/Pages/Bar/Bar.php [NC,L]
+RewriteRule ^hotelbar/dashboard ./src/Pages/Bar/Bar.php [NC,L]
+
+# Bar - Manage Liquor
+RewriteRule ^hotelbar/liquor/$1 ./src/Pages/Bar/LiquorDetails.php [NC,L]
+RewriteRule ^hotelbar/liquor/addliquor ./src/Helpers/Bar/AddLiquor.php [NC,L]
+RewriteRule ^hotelbar/liquor/editliquor ./src/Helpers/Bar/EditLiquor.php [NC,L]
+RewriteRule ^hotelbar/liquor ./src/Pages/Bar/LiquorDetails.php [NC,L]
+
+# Bar - Manage Sold
+RewriteRule ^hotelbar/itemsold/$1 ./src/Pages/Bar/ItemSold.php [NC,L]
+RewriteRule ^hotelbar/itemsold/itemcheck ./src/Helpers/Bar/ItemCheck.php [NC,L]
+RewriteRule ^hotelbar/itemsold ./src/Pages/Bar/ItemSold.php [NC,L]
+
+# Bar - Daily Sales
+RewriteRule ^hotelbar/salesdaily ./src/Pages/Bar/SalesDaily.php [NC,L]
+
+# Bar - Expenditure
+RewriteRule ^hotelbar/expenditure/$1 ./src/Pages/Bar/Expenditure.php [NC,L]
+RewriteRule ^hotelbar/expenditure/addexpenditure ./src/Helpers/Bar/addExpenditure.php [NC,L]
+RewriteRule ^hotelbar/expenditure/editexpenditure ./src/Helpers/Bar/Editexpenditure.php [NC,L]
+RewriteRule ^hotelbar/expenditure ./src/Pages/Bar/Expenditure.php [NC,L]
+
+# Bar - User
+
+
+# HR - Dashboard
+RewriteRule ^hr/$1 ./src/Pages/HR/HRManager.php [NC,L]
+RewriteRule ^hr/dashboard ./src/Pages/HR/HRManager.php [NC,L]
+
+# HR - Attendance
+RewriteRule ^hr/attendance/$1 ./src/Pages/HR/Attendance.php [NC,L]
+RewriteRule ^hr/attendance/markemployee ./src/Helpers/HR/markEmployee.php [NC,L]
+RewriteRule ^hr/attendance/checkattendance ./src/Helpers/HR/checkttendance.php [NC,L]
+RewriteRule ^hr/attendance/editattendance ./src/Helpers/HR/editAttendance.php [NC,L]
+RewriteRule ^hr/attendance ./src/Pages/HR/Attendance.php [NC,L]
+
+# HR - Leaves
+RewriteRule ^hr/leaves/$1 ./src/Pages/HR/Leaves.php [NC,L]
+RewriteRule ^hr/leaves/checkleaves ./src/Helpers/HR/checkLeaves.php [NC,L]
+RewriteRule ^hr/leaves/addleave ./src/Helpers/HR/addLeave.php [NC,L]
+RewriteRule ^hr/leaves/editleave ./src/Helpers/HR/editLeave.php [NC,L]
+RewriteRule ^hr/leaves ./src/Pages/HR/Leaves.php [NC,L]
+
+# HR - Employee
+RewriteRule ^hr/employee/$1 ./src/Pages/HR/Employee.php [NC,L]
+RewriteRule ^hr/employee/addemployee ./src/Helpers/HR/addEmployee.php [NC,L]
+RewriteRule ^hr/employee/editemployee ./src/Helpers/HR/editEmployee.php [NC,L]
+RewriteRule ^hr/employee ./src/Pages/HR/Employee.php [NC,L]
+
+# HR - User
+RewriteRule ^hr/settings ./src/Pages/HR/Settings.php [NC,L]
+
+
+# Accountant - 
+RewriteRule ^accounts ./src/Pages/Accountant/Accountant.php [NC,L]
+
+
+
+# Reception - 
+RewriteRule ^reception/$1 ./src/Pages/Reception/Reception.php [NC,L]
+RewriteRule ^reception/dashboard ./src/Pages/Reception/Reception.php [NC,L]
+RewriteRule ^reception/addinquiry ./src/Pages/Reception/AddInquiry.php [NC,L]
+RewriteRule ^reception/inquiriescheck ./src/Pages/Reception/InquiriesCheck.php [NC,L]
+RewriteRule ^reception/clientregistration ./src/Pages/Helpers/ClientRegistration.php [NC,L]
+RewriteRule ^reception/updateclients ./src/Pages/Reception/UpdateClients.php [NC,L]
+RewriteRule ^reception/settings ./src/Pages/Reception/Settings.php [NC,L]
+
+
+#Reservation - 
+RewriteRule ^reservation ./src/Pages/Reservation/Reservation.php [NC,L]
+
+
+# Management - 
+RewriteRule ^management ./src/Pages/Management/Management.php [NC,L]
+
+
+# error
+RewriteRule ^error ./src/Views/errorpage.php [NC,L]
+
+# public files
+RewriteRule ^manifest.json ./public/manifest.json [NC,L]
+RewriteRule ^robots.txt ./public/robots.txt [NC,L]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Options +Indexes
+
+#block bots
+RewriteCond %{HTTP_USER_AGENT} ^BlackWidow [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Bot\ mailto:craftbot@yahoo.com [OR]
+RewriteCond %{HTTP_USER_AGENT} ^ChinaClaw [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Custo [OR]
+RewriteCond %{HTTP_USER_AGENT} ^DISCo [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Download\ Demon [OR]
+RewriteCond %{HTTP_USER_AGENT} ^eCatch [OR]
+RewriteCond %{HTTP_USER_AGENT} ^EirGrabber [OR]
+RewriteCond %{HTTP_USER_AGENT} ^EmailSiphon [OR]
+RewriteCond %{HTTP_USER_AGENT} ^EmailWolf [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Express\ WebPictures [OR]
+RewriteCond %{HTTP_USER_AGENT} ^ExtractorPro [OR]
+RewriteCond %{HTTP_USER_AGENT} ^EyeNetIE [OR]
+RewriteCond %{HTTP_USER_AGENT} ^FlashGet [OR]
+RewriteCond %{HTTP_USER_AGENT} ^GetRight [OR]
+RewriteCond %{HTTP_USER_AGENT} ^GetWeb! [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Go!Zilla [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Go-Ahead-Got-It [OR]
+RewriteCond %{HTTP_USER_AGENT} ^GrabNet [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Grafula [OR]
+RewriteCond %{HTTP_USER_AGENT} ^HMView [OR]
+RewriteCond %{HTTP_USER_AGENT} HTTrack [NC,OR]
+RewriteCond %{HTTP_USER_AGENT} ^Image\ Stripper [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Image\ Sucker [OR]
+RewriteCond %{HTTP_USER_AGENT} Indy\ Library [NC,OR]
+RewriteCond %{HTTP_USER_AGENT} ^InterGET [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Internet\ Ninja [OR]
+RewriteCond %{HTTP_USER_AGENT} ^JetCar [OR]
+RewriteCond %{HTTP_USER_AGENT} ^JOC\ Web\ Spider [OR]
+RewriteCond %{HTTP_USER_AGENT} ^larbin [OR]
+RewriteCond %{HTTP_USER_AGENT} ^LeechFTP [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Mass\ Downloader [OR]
+RewriteCond %{HTTP_USER_AGENT} ^MIDown\ tool [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Mister\ PiX [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Navroad [OR]
+RewriteCond %{HTTP_USER_AGENT} ^NearSite [OR]
+RewriteCond %{HTTP_USER_AGENT} ^NetAnts [OR]
+RewriteCond %{HTTP_USER_AGENT} ^NetSpider [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Net\ Vampire [OR]
+RewriteCond %{HTTP_USER_AGENT} ^NetZIP [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Octopus [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Offline\ Explorer [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Offline\ Navigator [OR]
+RewriteCond %{HTTP_USER_AGENT} ^PageGrabber [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Papa\ Foto [OR]
+RewriteCond %{HTTP_USER_AGENT} ^pavuk [OR]
+RewriteCond %{HTTP_USER_AGENT} ^pcBrowser [OR]
+RewriteCond %{HTTP_USER_AGENT} ^RealDownload [OR]
+RewriteCond %{HTTP_USER_AGENT} ^ReGet [OR]
+RewriteCond %{HTTP_USER_AGENT} ^SiteSnagger [OR]
+RewriteCond %{HTTP_USER_AGENT} ^SmartDownload [OR]
+RewriteCond %{HTTP_USER_AGENT} ^SuperBot [OR]
+RewriteCond %{HTTP_USER_AGENT} ^SuperHTTP [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Surfbot [OR]
+RewriteCond %{HTTP_USER_AGENT} ^tAkeOut [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Teleport\ Pro [OR]
+RewriteCond %{HTTP_USER_AGENT} ^VoidEYE [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Web\ Image\ Collector [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Web\ Sucker [OR]
+RewriteCond %{HTTP_USER_AGENT} ^WebAuto [OR]
+RewriteCond %{HTTP_USER_AGENT} ^WebCopier [OR]
+RewriteCond %{HTTP_USER_AGENT} ^WebFetch [OR]
+RewriteCond %{HTTP_USER_AGENT} ^WebGo\ IS [OR]
+RewriteCond %{HTTP_USER_AGENT} ^WebLeacher [OR]
+RewriteCond %{HTTP_USER_AGENT} ^WebReaper [OR]
+RewriteCond %{HTTP_USER_AGENT} ^WebSauger [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Website\ eXtractor [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Website\ Quester [OR]
+RewriteCond %{HTTP_USER_AGENT} ^WebStripper [OR]
+RewriteCond %{HTTP_USER_AGENT} ^WebWhacker [OR]
+RewriteCond %{HTTP_USER_AGENT} ^WebZIP [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Wget [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Widow [OR]
+RewriteCond %{HTTP_USER_AGENT} ^WWWOFFLE [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Xaldon\ WebSpider [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Zeus
+RewriteRule ^.* - [F,L]
+
+#errors
+ErrorDocument 100 /100_CONTINUE
+ErrorDocument 101 /101_SWITCHING_PROTOCOLS
+ErrorDocument 102 /102_PROCESSING
+ErrorDocument 200 /200_OK
+ErrorDocument 201 /201_CREATED
+ErrorDocument 202 /202_ACCEPTED
+ErrorDocument 203 /203_NON_AUTHORITATIVE
+ErrorDocument 204 /204_NO_CONTENT
+ErrorDocument 205 /205_RESET_CONTENT
+ErrorDocument 206 /206_PARTIAL_CONTENT
+ErrorDocument 207 /207_MULTI_STATUS
+ErrorDocument 300 /300_MULTIPLE_CHOICES
+ErrorDocument 301 /301_MOVED_PERMANENTLY
+ErrorDocument 302 /302_MOVED_TEMPORARILY
+ErrorDocument 303 /303_SEE_OTHER
+ErrorDocument 304 /304_NOT_MODIFIED
+ErrorDocument 305 /305_USE_PROXY
+ErrorDocument 307 /307_TEMPORARY_REDIRECT
+ErrorDocument 400 /400_BAD_REQUEST
+ErrorDocument 401 /401_UNAUTHORIZED
+ErrorDocument 402 /402_PAYMENT_REQUIRED
+ErrorDocument 403 /403_FORBIDDEN
+ErrorDocument 404 /404_NOT_FOUND
+
+ErrorDocument 405 /405_METHOD_NOT_ALLOWED
+ErrorDocument 406 /406_NOT_ACCEPTABLE
+ErrorDocument 407 /407_PROXY_AUTHENTICATION_REQUIRED
+ErrorDocument 408 /408_REQUEST_TIME_OUT
+ErrorDocument 409 /409_CONFLICT
+ErrorDocument 410 /410_GONE
+ErrorDocument 411 /411_LENGTH_REQUIRED
+ErrorDocument 412 /412_PRECONDITION_FAILED
+ErrorDocument 413 /413_REQUEST_ENTITY_TOO_LARGE
+ErrorDocument 414 /414_REQUEST_URI_TOO_LARGE
+ErrorDocument 415 /415_UNSUPPORTED_MEDIA_TYPE
+ErrorDocument 416 /416_RANGE_NOT_SATISFIABLE
+ErrorDocument 417 /417_EXPECTATION_FAILED
+ErrorDocument 422 /422_UNPROCESSABLE_ENTITY
+ErrorDocument 423 /423_LOCKED
+ErrorDocument 424 /424_FAILED_DEPENDENCY
+ErrorDocument 426 /426_UPGRADE_REQUIRED
+ErrorDocument 500 /500_INTERNAL_SERVER_ERROR
+ErrorDocument 501 /501_NOT_IMPLEMENTED
+ErrorDocument 502 /502_BAD_GATEWAY
+ErrorDocument 503 /503_SERVICE_UNAVAILABLE
+ErrorDocument 504 /504_GATEWAY_TIME_OUT
+ErrorDocument 505 /505_VERSION_NOT_SUPPORTED
+ErrorDocument 506 /506_VARIANT_ALSO_VARIES
+ErrorDocument 507 /507_INSUFFICIENT_STORAGE
+ErrorDocument 510 /510_NOT_EXTENDED
