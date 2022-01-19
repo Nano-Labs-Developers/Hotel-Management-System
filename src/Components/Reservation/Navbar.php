@@ -1,9 +1,3 @@
-<?php
-    if(empty($user)) {
-        $user = "User";
-    }
-?>
-
 <nav class="navbar navbar-top navbar-expand navbar-dark bg-gradient-info border-bottom">
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -22,6 +16,7 @@
             </form>
             <ul class="navbar-nav align-items-center ml-md-auto ">
                 <li class="nav-item d-xl-none">
+
                     <div class="pr-3 sidenav-toggler sidenav-toggler-dark" data-action="sidenav-pin" data-target="#sidenav-main">
                         <div class="sidenav-toggler-inner">
                             <i class="sidenav-toggler-line"></i>
@@ -41,7 +36,7 @@
                     <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="media align-items-center">
                             <span class="avatar avatar-sm rounded-circle">
-                                <img alt="avatar" src="/Assets/image/avatar.jpg">
+                                <img alt="Image placeholder" src="/Assets/image/avatar.jpg">
                             </span>
                             <div class="media-body ml-2 d-none d-lg-block">
                                 <span class="mb-0 text-sm font-weight-bold"><?php echo $user; ?></span>
@@ -50,7 +45,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right ">
                         <div class="dropdown-header noti-title">
-                            <h6 class="text-overflow m-0">Accountant</h6>
+                            <h6 class="text-overflow m-0">Reservation</h6>
                         </div>
                         <a href="#!" class="dropdown-item">
                             <i class="ni ni-single-02"></i>

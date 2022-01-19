@@ -14,10 +14,10 @@
     <?php include "../../Components/Common/Header.php" ?>
 
     <body>
-        <?php include "../../Components/Bar/NavbarSide.php" ?>
+        <?php include "../../Components/Reception/NavbarSide.php" ?>
 
         <div class="main-content" id="panel">
-            <?php include "../../Components/Bar/Navbar.php" ?>
+            <?php include "../../Components/Reception/Navbar.php" ?>
 
             <div class="header bg-gradient-info pb-6">
                 <div class="container-fluid">
@@ -67,25 +67,25 @@
                                                             <tbody class="list">
                                                                 <?php
                                                                     require_once '../../Models/Database.inc.php';
-                                                                    $connect = new Database();
+                                                                    $conn = new Database();
 
-                                                                    $db = $connect->db();
-                                                                    $sql = "SELECT * FROM customers";
+                                                                    $db = $conn->db();
+                                                                    $sql = "SELECT * FROM client";
                                                                     $result = mysqli_query($db, $sql);
-                                                                    $customers = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                                                                    $clients = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-                                                                    foreach ($customers as $customer) {
-                                                                        $customerid = $customer['id'];
-                                                                        $button = '<a href="edit_customer.php?id='.$customerid.'" type="button" class="btn btn-warning btn-sm"><i class="fas fa-user-edit"></i> UPDATE</a>';
+                                                                    foreach ($clients as $client) {
+                                                                        $clientID = $client['client_ID'];
+                                                                        $button = '<a href="/reception/editclients?id='. $clientID .'" type="button" class="btn btn-success btn-sm"><i class="fas fa-user-edit"></i> UPDATE</a>';
 
                                                                         echo '
                                                                             <tr>
-                                                                                <td>'. $customer['id'] .'</td>
-                                                                                <td>'. $customer['first_name'] .'</td>
-                                                                                <td>'. $customer['last_name'] .'</td>
-                                                                                <td>'. $customer['email'] .'</td>
-                                                                                <td>'. $customer['address'] .'</td>
-                                                                                <td>'. $customer['mobile'] .'</td>
+                                                                                <td>'. $client['client_ID'] .'</td>
+                                                                                <td>'. $client['client_FName'] .'</td>
+                                                                                <td>'. $client['client_LName'] .'</td>
+                                                                                <td>'. $client['client_Email'] .'</td>
+                                                                                <td>'. $client['client_Address'] .'</td>
+                                                                                <td>'. $client['client_Contact'] .'</td>
                                                                                 <td>'. $button .'</td>
                                                                                 </td>
                                                                             </tr>
@@ -105,19 +105,19 @@
                     </div>
                 </div>
 
-                <?php include "../../Components/Admin/Footer.php" ?>
+                <?php include "../../Components/Common/Footer.php" ?>
             </div>
         </div>
 
         <script>$(document).ready(function() { $('#table_id').DataTable(); });
         </script>
-        <script src="/Assets/vendor/jquery/dist/jquery.min.js"></script>
-        <script src="/Assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="/Assets/vendor/js-cookie/js.cookie.js"></script>
-        <script src="/Assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
-        <script src="/Assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
-        <script src="/Assets/vendor/clipboard/dist/clipboard.min.js"></script>
-        <script src="/Assets/js/argon.js?v=1.2.0"></script>
+        <script src="/src/Lib/vendor/jquery/dist/jquery.min.js"></script>
+        <script src="/src/Lib/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="/src/Lib/vendor/js-cookie/js.cookie.js"></script>
+        <script src="/src/Lib/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+        <script src="/src/Lib/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+        <script src="/src/Lib/vendor/clipboard/dist/clipboard.min.js"></script>
+        <script src="/src/Lib/js/argon.js?v=1.2.0"></script>
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
     </body>

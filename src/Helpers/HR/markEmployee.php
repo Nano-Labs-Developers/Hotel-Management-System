@@ -1,7 +1,7 @@
 <?php  
     require_once '../../Models/Database.php';
-    $connect = new Database();
-    $db = $connect->db();
+    $conn = new Database();
+    $db = $conn->db();
 
     if (isset($_POST["action"])) {
         if ($_POST["action"] == "present") { 

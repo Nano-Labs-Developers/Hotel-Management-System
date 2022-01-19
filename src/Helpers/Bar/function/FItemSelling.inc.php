@@ -1,8 +1,8 @@
 <?php
     include '../../Models/Database.php';
 
-    $connect = new Database();
-    $db = $connect->db();
+    $conn = new Database();
+    $db = $conn->db();
 
     if (isset($_POST["id"])) { 
         $id = $_POST['id'];

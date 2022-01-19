@@ -1,27 +1,23 @@
 <?php
     session_start();
-    if(!(isset($_SESSION['role_id'])) && !(isset($_SESSION['username']))){
-        header("location:../index.php");
+    if(!(isset($_SESSION['user_secret'])) && !(isset($_SESSION['username']))){
+        header("location: /login");
     }
-    if ($_SESSION['role_id'] != 3) {
-        header("location:../index.php");
-    }  
-
+    if ($_SESSION['user_secret'] != '1b1c9df50fb107e510b219734d95099ec467ff2f') {
+        header("location: /login");
+    }
     $user = $_SESSION['username'];
-
 ?>
+
 <!DOCTYPE html>
 <html>
-    
-    <?php include "../dashboard_header.php" ?>
+    <?php include "../../Components/Common/Header.php" ?>
+
     <body>
-        
-        <?php include "side_navbar.php" ?>
-        
+        <?php include "../../Components/Reservation/NavbarSide.php" ?>
+
         <div class="main-content" id="panel">
-            
-            <?php include "top_navbar.php" ?>
-            
+            <?php include "../../Components/Reservation/Navbar.php" ?>
             
             <div class="header bg-gradient-info pb-6">
                 <div class="container-fluid">
@@ -40,7 +36,6 @@
                     </div>
                 </div>
             </div>
-            
             <div class="container-fluid mt--6">
                 <div class="row justify-content-center">
                     <div class=" col ">
@@ -50,7 +45,6 @@
                             </div>
                             <div class="card-body">
                                 <div class="row icon-examples">
-                                    <!--------------- search bar-------------- -->
                                     <div class="col-xl-12 order-xl-1">
                                         <div class="card">
                                             <div class="card-header">
@@ -63,7 +57,6 @@
                                     </div>
                                 </div>
                                 <br />
-                                <!---------------------show results ---------------->
                                 <div class="col-xl-12 order-xl-1">
                                     <div class="card">
                                         <div class="card-header">
@@ -84,44 +77,37 @@
                 <?php include "../../Components/Admin/Footer.php" ?>
             </div>
         </div>
+
         <script>
-            $(document).ready(function(){
-                function load_data(query)
-                {
+            $(document).ready(function() {
+                function load_data(query) {
                     $.ajax({
                         url:"search_customers.php",
                         method:"post",
                         data:{query:query},
-                        success:function(data)
-                        {
+                        success:function(data) {
                             $('#result').html(data);
                         }
                     });
                 }
   
-                $('#search_text').keyup(function(){
+                $('#search_text').keyup(function() {
                     var search = $(this).val();
-                    if(search != '')
-                    {
+                    if(search != '') {
                         load_data(search);
                     }
-                    else
-                    {
+                    else {
                         load_data();      
                     }
                 });
             });
         </script>
-        
-        
-        <script src="/Assets/vendor/jquery/dist/jquery.min.js"></script>
-        <script src="/Assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="/Assets/vendor/js-cookie/js.cookie.js"></script>
-        <script src="/Assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
-        <script src="/Assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
-        
-        <script src="/Assets/vendor/clipboard/dist/clipboard.min.js"></script>
-        
+        <script src="/src/Lib/vendor/jquery/dist/jquery.min.js"></script>
+        <script src="/src/Lib/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="/src/Lib/vendor/js-cookie/js.cookie.js"></script>
+        <script src="/src/Lib/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+        <script src="/src/Lib/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+        <script src="/src/Lib/vendor/clipboard/dist/clipboard.min.js"></script>
         <script src="/Assets/js/argon.js?v=1.2.0"></script>
     </body>
 </html>

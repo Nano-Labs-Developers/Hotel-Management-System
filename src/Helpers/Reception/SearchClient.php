@@ -1,8 +1,8 @@
 <?php
 	include '../../Models/Database.inc.php';
 
-	$connect = new Database();
-	$db = $connect->db();
+	$conn = new Database();
+	$db = $conn->db();
 	$output = '';
 
 	if (isset($_POST["query"])) {

@@ -16,7 +16,6 @@
             </form>
             <ul class="navbar-nav align-items-center ml-md-auto ">
                 <li class="nav-item d-xl-none">
-
                     <div class="pr-3 sidenav-toggler sidenav-toggler-dark" data-action="sidenav-pin" data-target="#sidenav-main">
                         <div class="sidenav-toggler-inner">
                             <i class="sidenav-toggler-line"></i>
@@ -36,7 +35,7 @@
                     <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="media align-items-center">
                             <span class="avatar avatar-sm rounded-circle">
-                                <img alt="Image placeholder" src="/Assets/img/theme/team-4.jpg">
+                                <img alt="Image placeholder" src="/Assets/image/avatar.jpg">
                             </span>
                             <div class="media-body ml-2 d-none d-lg-block">
                                 <span class="mb-0 text-sm font-weight-bold"><?php echo $user; ?></span>

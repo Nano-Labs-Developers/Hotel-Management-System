@@ -55,8 +55,7 @@ Header set Cache-Control "max-age=600"
 Header unset Cache-Control
 </FilesMatch>
 
-# path verify
-
+# path js css img
 RewriteRule ^image/(.*)$ ./images/$1 [NC,L]
 RewriteRule ^/css/?css(.*) ./src/css/$1
 RewriteRule ^/js/?js(.*) ./src/js/$1
@@ -148,29 +147,29 @@ RewriteRule ^hr/employee ./src/Pages/HR/Employee.php [NC,L]
 # HR - User
 RewriteRule ^hr/settings ./src/Pages/HR/Settings.php [NC,L]
 
-
 # Accountant - 
 RewriteRule ^accounts ./src/Pages/Accountant/Accountant.php [NC,L]
-
-
 
 # Reception - 
 RewriteRule ^reception/$1 ./src/Pages/Reception/Reception.php [NC,L]
 RewriteRule ^reception/dashboard ./src/Pages/Reception/Reception.php [NC,L]
 RewriteRule ^reception/addinquiry ./src/Pages/Reception/AddInquiry.php [NC,L]
 RewriteRule ^reception/inquiriescheck ./src/Pages/Reception/InquiriesCheck.php [NC,L]
-RewriteRule ^reception/clientregistration ./src/Pages/Helpers/ClientRegistration.php [NC,L]
+RewriteRule ^reception/clientregistration ./src/Pages/Reception/ClientRegistration.php [NC,L]
 RewriteRule ^reception/updateclients ./src/Pages/Reception/UpdateClients.php [NC,L]
+RewriteRule ^reception/editclients ./src/Pages/Reception/EditClients.php [NC,L]
 RewriteRule ^reception/settings ./src/Pages/Reception/Settings.php [NC,L]
 
+# Reservation - Dashboard
+RewriteRule ^reservation/$1./src/Pages/Reservation/Reservation.php [NC,L]
+RewriteRule ^reservation/dashboard ./src/Pages/Reservation/Reservation.php [NC,L]
 
-#Reservation - 
-RewriteRule ^reservation ./src/Pages/Reservation/Reservation.php [NC,L]
+# Reservation - Addroom
+RewriteRule ^reservation/addroom ./src/Helpers/Reservation/AddRoom.php [NC,L]
 
-
-# Management - 
-RewriteRule ^management ./src/Pages/Management/Management.php [NC,L]
-
+# Management - Dashboard
+RewriteRule ^management/$1 ./src/Pages/Management/Management.php [NC,L]
+RewriteRule ^management/dashboard ./src/Pages/Management/Management.php [NC,L]
 
 # error
 RewriteRule ^error ./src/Views/errorpage.php [NC,L]

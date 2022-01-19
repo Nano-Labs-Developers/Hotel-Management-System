@@ -1,27 +1,23 @@
 <?php
     session_start();
-    if(!(isset($_SESSION['role_id'])) && !(isset($_SESSION['username']))){
-        header("location:../index.php");
-    }
-    if ($_SESSION['role_id'] != 3) {
-        header("location:../index.php");
-    }  
-
-    $user = $_SESSION['username'];
-
+    // if(!(isset($_SESSION['user_secret'])) && !(isset($_SESSION['username']))){
+    //     header("location: /login");
+    // }
+    // if ($_SESSION['user_secret'] != '1b1c9df50fb107e510b219734d95099ec467ff2f') {
+    //     header("location: /login");
+    // }
+    // $user = $_SESSION['username'];
 ?>
+
 <!DOCTYPE html>
 <html>
-    
-    <?php include "../dashboard_header.php" ?>
+    <?php include "../../Components/Common/Header.php" ?>
+
     <body>
-        
-        <?php include "side_navbar.php" ?>
-        
+        <?php include "../../Components/Reservation/NavbarSide.php" ?>
+
         <div class="main-content" id="panel">
-            
-            <?php include "top_navbar.php" ?>
-            
+            <?php include "../../Components/Reservation/Navbar.php" ?>
             
             <div class="header bg-gradient-info pb-6">
                 <div class="container-fluid">
@@ -40,7 +36,6 @@
                     </div>
                 </div>
             </div>
-            
             <div class="container-fluid mt--6">
                 <div class="row justify-content-center">
                     <div class=" col ">
@@ -58,17 +53,14 @@
                                             if ( is_numeric($customerid) == true){
                                                 require_once '../../Models/Database.inc.php';
                                                 try{
-                                                    $connect = new Database();
-                                                    $db = $connect->db();
+                                                    $conn = new Database();
+                                                    $db = $conn->db();
                                                     
                                                     $customerid = mysqli_real_escape_string($db, $_GET['customer']);
                                                     $roomno = mysqli_real_escape_string($db, $_GET['room']);
                                                     $inquiryid = mysqli_real_escape_string($db, $_GET['inquiry']);
 
-                                                    $query = "
-                                                        SELECT * FROM customers 
-                                                        WHERE id = '".$customerid."'
-                                                    ";
+                                                    $query = "SELECT * FROM client WHERE client_ID = '".$customerid."'";
 
                                                     $result = mysqli_query($db, $query);
                                                     if(mysqli_num_rows($result) > 0)
@@ -80,12 +72,12 @@
                                                         $c_time = new DateTime(null, new DateTimeZone('Asia/Colombo'));
                                                         $c_time = $c_time->format("H:i");
                                                         while($row = mysqli_fetch_array($result)){
-                                                            $id = $row['id'];
-                                                            $firstname=$row['first_name'];
-                                                            $lastname=$row['last_name'];
-                                                            $email=$row['email'];
-                                                            $address = $row['address'];
-                                                            $mobile = $row['mobile'];
+                                                            $id = $row['client_ID'];
+                                                            $firstname=$row['client_FName'];
+                                                            $lastname=$row['client_LName'];
+                                                            $email=$row['client_Email'];
+                                                            $address = $row['client_Address'];
+                                                            $contactno = $row['client_Contact'];
                                                             echo 
                                                                 '<div class="col-xl-12 order-xl-1">
                                                                     <div class="card">
@@ -141,7 +133,7 @@
                                                                                                 <div class="col-lg-12">
                                                                                                     <div class="form-group">
                                                                                                         <label class="form-control-label">Mobile</label>
-                                                                                                        <input name="mobile" type="text" id="phone" class="phone form-control" value="'.$mobile.'" readonly>
+                                                                                                        <input name="contactno" type="text" id="phone" class="phone form-control" value="'.$contactno.'" readonly>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
@@ -150,19 +142,18 @@
                                                                                         
                                                                                         <h6 class="heading-small text-muted mb-4">Room Information</h6>'?>
                                                                                         <?php
-                                                                                            $query1 = "SELECT room.*, hotel.name AS hotel, room_types.name AS room_type 
-                                                                                                        FROM room
-                                                                                                        INNER JOIN hotel ON room.hotel_code = hotel.code
-                                                                                                        INNER JOIN room_types ON room.room_type_id = room_types.id
-                                                                                                        WHERE room_no = '".$roomno."'";
+                                                                                            $query1 = "SELECT room.*, hotel.hotel_Name AS hotel, room_type.rt_Type AS room_type FROM room
+                                                                                                                INNER JOIN hotel ON room.hotel_Code = hotel.hotel_Code
+                                                                                                                INNER JOIN room_type ON room.rt_ID = room_type.rt_ID
+                                                                                                                WHERE room_Number = '". $roomno ."'";
                                                                                             $result2 = mysqli_query($db,$query1) or trigger_error("Query Failed! SQL: $query1 - Error: ".mysqli_error($db), E_USER_ERROR);
                                                                                             if(mysqli_num_rows($result2) > 0){
                                                                                                 while($row2 = mysqli_fetch_array($result2)){
-                                                                                                    $room_id = $row2['id'];
-                                                                                                    $room_room_no = $row2['room_no'];
+                                                                                                    $room_id = $row2['room_ID'];
+                                                                                                    $room_room_no = $row2['room_Number'];
                                                                                                     $room_hotel = $row2['hotel'];
                                                                                                     $room_type = $row2['room_type'];
-                                                                                                    $room_ac = $row2['is_ac'];
+                                                                                                    $room_ac = $row2['room_AC'];
 
                                                                                                     echo '
                                                                                                         <div class="pl-lg-4">
@@ -194,17 +185,14 @@
                                                                                                                     </div>
                                                                                                                 </div>
                                                                                                             </div>
-                                                                                                            
                                                                                                         </div>
-                                                                                                        ';
+                                                                                                    ';
                                                                                                 }
                                                                                             }
                                                                                                             
                                                                                         ?>
-                                                                                        
-                                                                                        
-                                                                                                        <?php echo'
-                                                                                                        
+                                                                                        <?php
+                                                                                            echo'
                                                                                             <div class="col-lg-12">
                                                                                                 <button type="submit" name="submit" class="btn btn-warning">Submit</button>
                                                                                             </div>
@@ -214,111 +202,102 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>' ;
-                                                                $db = null;
+                                                                </div>
+                                                            ' ;
+                                                            $db = null;
                                                         }
-                                                    }else{
+                                                    } else {
                                                         echo '<center>Sorry No Customer Found!!</center>';
                                                     }
-                                                    //Close the connection to the database.
                                                     $db = null;
-                                                }
-                                                catch(Exception $e){
+
+                                                } catch (Exception $ex){
                                                     http_response_code(500);
                                                     die('Error establishing connection with database');
                                                 }
-                                            }else{
+                                            } else {
                                                 http_response_code(400);
                                                 die('Error processing bad or malformed request');
                                             }
-                                        }
-                                        else{
+                                        } else {
                                             echo 'no';
                                         }
-                                    ?>   
-                                    <?php if(isset($_GET['success']))
-                                    {
-                                        echo'<a href="inquiry.php" type="button" style="color:white" class="btn btn-success"><i class="fas fa-angle-double-left"></i> Back to Inquiry</a>';  
-                                    }
+                                        
+                                        if(isset($_GET['success'])) {
+                                            echo'<a href="inquiry.php" type="button" style="color:white" class="btn btn-success"><i class="fas fa-angle-double-left"></i> Back to Inquiry</a>';  
+                                        }
                                     ?>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!---------------------------- Registration process ------------------------------>
-                <?php
-                    if (isset($_POST['submit'])){
-                        include 'Receptionist.php';
-                        //create new instance from Receptionist class
-                        $receptionist = new Receptionist(); 
-                        $customer_id = $customerid;
-                        $adults = $_POST['adults'];
-                        $children = $_POST['children'];
-                        $checkin = $_POST['checkin'];
-                        $checkout = $_POST['checkout'];
-                        if ($adults == "") {
-                            $adults = 0;
-                        }
-                        if ($children == "") {
-                            $children = 0;
-                        }
-
-                        $rm_type = filter_input(INPUT_POST, 'room_types', FILTER_SANITIZE_STRING);
-                        $room_type_id = $rm_type;
-                        $is_ac = $_POST['ac_type'];
-                        if ($is_ac == "on") {
-                            $ac_value = 1;
-                        }else {
-                            $ac_value = 0;
-                        }
-                        $status = 0;
-                        $receptionist_id = $_SESSION['id'];
-                        $receptionist->addInquiry($customer_id, $room_type_id, $ac_value, $status, $receptionist_id, $checkin, $checkout, $adults, $children);
-                    }
-                ?>
-                <!--------------------- add inquiry process end ------------------------>
-                <script>
-                    $('input[name="adults"]').mask('0000000000');
-                    $('input[name="children"]').mask('0000000000');
-                </script>
-                
-                <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-                
-                <?php 
-                    if(isset($_GET['registration']))
-                    {
-                        echo'<script>
-                            swal("Customer Registration Success!", "New Customer Details added!", "success");
-                        </script>';
-                    }
-                    if(isset($_GET['failed']))
-                    {
-                        echo'<script>
-                            swal("Inquiry Adding Failed!", "Something went wrong!", "error");
-                        </script>'; 
-                    }
-                    if(isset($_GET['success']))
-                    {
-                        echo'<script>
-                            swal("Success!", "Inquiry Added Successfully!", "success");
-                        </script>';
-                    }
-                ?>
                 
                 <?php include "../../Components/Admin/Footer.php" ?>
             </div>
         </div>
         
-        
-        <script src="/Assets/vendor/jquery/dist/jquery.min.js"></script>
-        <script src="/Assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="/Assets/vendor/js-cookie/js.cookie.js"></script>
-        <script src="/Assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
-        <script src="/Assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
-        
-        <script src="/Assets/vendor/clipboard/dist/clipboard.min.js"></script>
-        
-        <script src="/Assets/js/argon.js?v=1.2.0"></script>
+        <script>
+            $('input[name="adults"]').mask('0000000000');
+            $('input[name="child"]').mask('0000000000');
+        </script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="/src/Lib/vendor/jquery/dist/jquery.min.js"></script>
+        <script src="/src/Lib/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="/src/Lib/vendor/js-cookie/js.cookie.js"></script>
+        <script src="/src/Lib/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+        <script src="/src/Lib/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+        <script src="/src/Lib/vendor/clipboard/dist/clipboard.min.js"></script>
+        <script src="/src/Lib/js/argon.js?v=1.2.0"></script>
     </body>
 </html>
+
+<?php
+    if (isset($_POST['submit'])){
+        include 'Receptionist.php';
+
+        $receptionist = new Reception(); 
+        $customer_id = $customerid;
+        $adults = $_POST['adults'];
+        $child = $_POST['child'];
+        $checkin = $_POST['checkin'];
+        $checkout = $_POST['checkout'];
+        if ($adults == "") {
+            $adults = 0;
+        }
+        if ($child == "") {
+            $child = 0;
+        }
+
+        $rm_type = filter_input(INPUT_POST, 'room_types', FILTER_SANITIZE_STRING);
+        $room_type_id = $rm_type;
+        $is_ac = $_POST['ac_type'];
+        if ($is_ac == "on") {
+            $ac_value = 1;
+        }else {
+            $ac_value = 0;
+        }
+        $status = 0;
+        $receptionist_id = $_SESSION['id'];
+        $receptionist->addInquiry($customer_id, $room_type_id, $ac_value, $status, $receptionist_id, $checkin, $checkout, $adults, $child);
+    }
+
+    if(isset($_GET['registration']))
+    {
+        echo'<script>
+            swal("Customer Registration Success!", "New Customer Details added!", "success");
+        </script>';
+    }
+    if(isset($_GET['failed']))
+    {
+        echo'<script>
+            swal("Inquiry Adding Failed!", "Something went wrong!", "error");
+        </script>'; 
+    }
+    if(isset($_GET['success']))
+    {
+        echo'<script>
+            swal("Success!", "Inquiry Added Successfully!", "success");
+        </script>';
+    }
+?>

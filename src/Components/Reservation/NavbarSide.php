@@ -16,32 +16,26 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/reception/addinquiry">
-                            <i class="fas fa-file-alt text-pink"></i>
-                            <span class="nav-link-text">Add Inquiry</span>
+                            <i class="fas fa-pencil-alt text-green"></i>
+                            <span class="nav-link-text">Available Rooms</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/reception/inquiriescheck">
-                            <i class="fas fa-file-alt text-primary"></i>
-                            <span class="nav-link-text">Check Inquiries</span>
+                            <i class="fas fa-pencil-alt text-orange"></i>
+                            <span class="nav-link-text">Room Status</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/reception/clientregistration">
-                            <i class="fas fa-user-plus text-green"></i>
-                            <span class="nav-link-text">Register New Client</span>
+                            <i class="fas fa-paper-plane text-blue"></i>
+                            <span class="nav-link-text">Inquiry Transfer</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/reception/updateclients">
-                            <i class="fas fa-user-edit text-orange"></i>
-                            <span class="nav-link-text">Update Existing Client</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="fas fa-print text-blue"></i>
-                            <span class="nav-link-text">Print Invoice</span>
+                        <i class="fas fa-file-alt text-green"></i>
+                            <span class="nav-link-text">Reservations Report</span>
                         </a>
                     </li>
                 </ul>

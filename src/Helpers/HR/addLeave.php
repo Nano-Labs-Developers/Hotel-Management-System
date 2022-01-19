@@ -54,8 +54,8 @@
                        require_once '../../Models/Database.inc.php';
                     try{
 
-                       $connect = new Database();
-                       $db = $connect->db();
+                       $conn = new Database();
+                       $db = $conn->db();
                        
                         $employeeid = mysqli_real_escape_string($db, $_GET['id']);
                         $query = "
@@ -147,8 +147,8 @@
                                     <!--select job type -->
                                     <?php
                                                                                             require_once '../../Models/Database.inc.php';
-                                                                                            $connect = new Database();
-                                                                                            $db = $connect->db();
+                                                                                            $conn = new Database();
+                                                                                            $db = $conn->db();
                                                                                             $list = mysqli_query($db,"SELECT * FROM `job_roles`");
                                                                                             while ($row = mysqli_fetch_assoc($list)) 
                                                                                             {
@@ -169,8 +169,8 @@
                                         <!--select hotel -->
                                         <?php
                                                                                             require_once '../../Models/Database.inc.php';
-                                                                                            $connect = new Database();
-                                                                                            $db = $connect->db();
+                                                                                            $conn = new Database();
+                                                                                            $db = $conn->db();
                                                                                             $list = mysqli_query($db,"SELECT * FROM `hotel`");
                                                                                             while ($row = mysqli_fetch_assoc($list)) 
                                                                                             {
@@ -346,13 +346,13 @@ if(isset($_GET['failed']))
 
 
 
-            <script src="/Assets/vendor/jquery/dist/jquery.min.js"></script>
-            <script src="/Assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-            <script src="/Assets/vendor/js-cookie/js.cookie.js"></script>
-            <script src="/Assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
-            <script src="/Assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+            <script src="/src/Lib/vendor/jquery/dist/jquery.min.js"></script>
+            <script src="/src/Lib/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="/src/Lib/vendor/js-cookie/js.cookie.js"></script>
+            <script src="/src/Lib/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+            <script src="/src/Lib/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
 
-            <script src="/Assets/vendor/clipboard/dist/clipboard.min.js"></script>
+            <script src="/src/Lib/vendor/clipboard/dist/clipboard.min.js"></script>
 
             <script src="/Assets/js/argon.js?v=1.2.0"></script>
     </body>

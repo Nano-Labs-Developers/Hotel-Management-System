@@ -70,8 +70,8 @@
                                                         <?php
                                                             require_once '../../Models/Database.inc.php';
 
-                                                            $connect = new Database();
-                                                            $db = $connect->db();
+                                                            $conn = new Database();
+                                                            $db = $conn->db();
                                                             $sql = "SELECT * FROM bar_income";
                                                             $result = mysqli_query($db, $sql);
                                                             $items = mysqli_fetch_all($result, MYSQLI_ASSOC);

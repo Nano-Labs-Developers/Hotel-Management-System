@@ -14,10 +14,10 @@
     <?php include "../../Components/Common/Header.php" ?>
 
     <body>
-        <?php include "../../Components/Bar/NavbarSide.php" ?>
+        <?php include "../../Components/Reception/NavbarSide.php" ?>
 
         <div class="main-content" id="panel">
-            <?php include "../../Components/Bar/Navbar.php" ?>
+            <?php include "../../Components/Reception/Navbar.php" ?>
 
             <div class="header bg-gradient-info pb-6">
                 <div class="container-fluid">
@@ -52,11 +52,11 @@
                                             if (is_numeric($clientID) == true) {
                                                 require_once '../../Models/Database.inc.php';
                                                 try {
-                                                    $connect = new Database();
-                                                    $db = $connect->db();
+                                                    $conn = new Database();
+                                                    $db = $conn->db();
                                             
                                                     $clientID = mysqli_real_escape_string($db, $_GET['client']);
-                                                    $query = "SELECT * FROM client WHERE id = '". $clientID ."' ";
+                                                    $query = "SELECT * FROM client WHERE client_ID = '". $clientID ."' ";
                                                     $result = mysqli_query($db, $query);
 
                                                     if (mysqli_num_rows($result) > 0) {
@@ -218,7 +218,7 @@
                     </div>
                 </div>
 
-                <?php include "../../Components/Admin/Footer.php" ?>
+                <?php include "../../Components/Common/Footer.php" ?>
             </div>
         </div>
 
@@ -227,12 +227,12 @@
             $('input[name="children"]').mask('0000000000');
         </script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-        <script src="/Assets/vendor/jquery/dist/jquery.min.js"></script>
-        <script src="/Assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="/Assets/vendor/js-cookie/js.cookie.js"></script>
-        <script src="/Assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
-        <script src="/Assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
-        <script src="/Assets/vendor/clipboard/dist/clipboard.min.js"></script>
+        <script src="/src/Lib/vendor/jquery/dist/jquery.min.js"></script>
+        <script src="/src/Lib/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="/src/Lib/vendor/js-cookie/js.cookie.js"></script>
+        <script src="/src/Lib/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+        <script src="/src/Lib/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+        <script src="/src/Lib/vendor/clipboard/dist/clipboard.min.js"></script>
         <script src="/Assets/js/argon.js?v=1.2.0"></script>
     </body>
 </html>
@@ -240,7 +240,7 @@
 <?php
     if (isset($_POST['submit'])){
         include 'Receptionist.php';
-        $receptionist = new Receptionist(); 
+        $receptionist = new Reception(); 
     
         $client_id = $clientID;
         $adults = $_POST['adults'];

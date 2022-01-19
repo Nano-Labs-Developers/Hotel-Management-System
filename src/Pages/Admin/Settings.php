@@ -51,8 +51,8 @@
 
                                             try{
                                                 require_once '../../Models/Database.inc.php';
-                                                $connect = new Database();
-                                                $db = $connect->db();
+                                                $conn = new Database();
+                                                $db = $conn->db();
                                             
                                                 $userid = mysqli_real_escape_string($db, $user_id);
                                                 $query = "SELECT * FROM user WHERE `user_ID` = '". $userid ."'";
@@ -190,12 +190,12 @@
             }
         </script>
         <script src="/src/Assets/js/argon.js?v=1.2.0"></script>
-        <script src="/src/Assets/vendor/js-cookie/js.cookie.js"></script>
-        <script src="/src/Assets/vendor/jquery/dist/jquery.min.js"></script>
-        <script src="/src/Assets/vendor/clipboard/dist/clipboard.min.js"></script>
+        <script src="/src/src/Lib/vendor/js-cookie/js.cookie.js"></script>
+        <script src="/src/src/Lib/vendor/jquery/dist/jquery.min.js"></script>
+        <script src="/src/src/Lib/vendor/clipboard/dist/clipboard.min.js"></script>
         <script src="/src/Lib/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="/src/Assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
-        <script src="/src/Assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+        <script src="/src/src/Lib/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+        <script src="/src/src/Lib/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
     </body>

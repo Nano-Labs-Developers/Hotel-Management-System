@@ -8,10 +8,10 @@
     <div class="scrollbar-inner">
         <div class="sidenav-header align-items-center">
             <a class="navbar-brand" href="javascript:void(0)">
-                <img src="/Assets/image/lakderana_logo.png" class="navbar-brand-img" alt="icon">
+                <img src="/Assets/image/lakderana.png" class="navbar-brand-img" alt="icon">
             </a>
         </div>
-        <div class="navbar-inner">
+        <div class="navbar-inner mt-5">
             <div class="collapse navbar-collapse" id="sidenav-collapse-main">
                 <ul class="navbar-nav">
                     <li class="nav-item">

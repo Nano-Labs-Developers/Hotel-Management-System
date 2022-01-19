@@ -72,8 +72,8 @@
                                                     <tbody class="list">
                                                         <?php
                                                             require_once '../../Models/Database.php';
-                                                            $connect = new Database();
-                                                            $db = $connect->db();
+                                                            $conn = new Database();
+                                                            $db = $conn->db();
                                                             $current_date = new DateTime(null, new DateTimeZone('Asia/Colombo'));
                                                             $current_date = $current_date->format("Y-m-d");
                                                             $sql = "SELECT * FROM attendance";
@@ -141,12 +141,12 @@
 
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script>$(document).ready(function() { $('#table_id').DataTable();});</script>
-        <script src="/Assets/vendor/jquery/dist/jquery.min.js"></script>
-        <script src="/Assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="/Assets/vendor/js-cookie/js.cookie.js"></script>
-        <script src="/Assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
-        <script src="/Assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
-        <script src="/Assets/vendor/clipboard/dist/clipboard.min.js"></script>
+        <script src="/src/Lib/vendor/jquery/dist/jquery.min.js"></script>
+        <script src="/src/Lib/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="/src/Lib/vendor/js-cookie/js.cookie.js"></script>
+        <script src="/src/Lib/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+        <script src="/src/Lib/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+        <script src="/src/Lib/vendor/clipboard/dist/clipboard.min.js"></script>
         <script src="/Assets/js/argon.js?v=1.2.0"></script>
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>

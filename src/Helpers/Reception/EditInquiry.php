@@ -14,10 +14,10 @@
     <?php include "../../Components/Common/Header.php" ?>
 
     <body>
-        <?php include "../../Components/Bar/NavbarSide.php" ?>
+        <?php include "../../Components/Reception/NavbarSide.php" ?>
 
         <div class="main-content" id="panel">
-            <?php include "../../Components/Bar/Navbar.php" ?>
+            <?php include "../../Components/Reception/Navbar.php" ?>
 
             <div class="header bg-gradient-info pb-6">
                 <div class="container-fluid">
@@ -53,8 +53,8 @@
                                                 require_once '../../Models/Database.inc.php';
                                                 
                                                 try {
-                                                    $connect = new Database();
-                                                    $db = $connect->db();
+                                                    $conn = new Database();
+                                                    $db = $conn->db();
                                                 
                                                     $inquiryID = mysqli_real_escape_string($db, $_GET['inquiry']);
                                                     $query = "SELECT * FROM inquiry WHERE id = '".$inquiryID."'";
@@ -76,7 +76,7 @@
                                                             $check_in = $row['check_in'];
                                                             $check_out = $row['check_out'];
                                                             $adults = $row['adults'];
-                                                            $children = $row['children'];
+                                                            $child = $row['child'];
 
                                                             if ($is_ac == 1) {
                                                                 $ac = "1";
@@ -94,7 +94,7 @@
                                                             $check_out_time = new DateTime($check_out, new DateTimeZone('Asia/Colombo'));
                                                             $check_out_time = $check_out_time->format("H:i");
                          
-                                                            $query2 = "SELECT * FROM customers WHERE id = '".$customer_id."'";
+                                                            $query2 = "SELECT * FROM client WHERE id = '".$customer_id."'";
                                                             $result2 = mysqli_query($db, $query2);
                                                             
                                                             if ($status == 0) {
@@ -194,8 +194,8 @@
                                                                                                                 <input name="adults " value=" '.$adults.' " class="form-control " type="text " id="adults " min="0 ">
                                                                                                             </div>
                                                                                                             <div class="form-group ">
-                                                                                                                <label for="children " class="form-control-label ">Enter Total Children</label>
-                                                                                                                <input name="children " value=" '.$children.' " class="form-control " type="text " id="children " min="0 ">
+                                                                                                                <label for="child " class="form-control-label ">Enter Total Children</label>
+                                                                                                                <input name="child " value=" '.$child.' " class="form-control " type="text " id="child " min="0 ">
                                                                                                             </div>
                                                                                                         </div>
                                                                                                     </div>
@@ -268,35 +268,34 @@
                     </div>
                 </div>
 
-                <?php include "../../Components/Admin/Footer.php" ?>
+                <?php include "../../Components/Common/Footer.php" ?>
             </div>
         </div>
 
         <script>
             $('input[name="adults"]').mask('0000000000');
-            $('input[name="children"]').mask('0000000000');
+            $('input[name="child"]').mask('0000000000');
         </script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-        <script src="/Assets/vendor/jquery/dist/jquery.min.js"></script>
-        <script src="/Assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="/Assets/vendor/js-cookie/js.cookie.js"></script>
-        <script src="/Assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
-        <script src="/Assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
-        <script src="/Assets/vendor/clipboard/dist/clipboard.min.js"></script>
+        <script src="/src/Lib/vendor/jquery/dist/jquery.min.js"></script>
+        <script src="/src/Lib/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="/src/Lib/vendor/js-cookie/js.cookie.js"></script>
+        <script src="/src/Lib/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+        <script src="/src/Lib/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+        <script src="/src/Lib/vendor/clipboard/dist/clipboard.min.js"></script>
         <script src="/Assets/js/argon.js?v=1.2.0"></script>
     </body>
 </html>
 
 <?php
-
     if (isset($_POST['submit'])){
-        include 'Receptionist.php';
-        $receptionist = new Receptionist(); 
+        include './function/FReception.inc.php';
+        $receptionist = new Reception(); 
         
         $receptionist_id = $_SESSION['id'];
         $inquiry_id = $inquiryID;
         $adults = $_POST['adults'];
-        $children = $_POST['children'];
+        $child = $_POST['child'];
         $checkin = $_POST['checkin'];
         $checkout = $_POST['checkout'];
         $rm_type = filter_input(INPUT_POST, 'room_types', FILTER_SANITIZE_STRING);
@@ -308,8 +307,8 @@
             $adults = 0;
         }
         
-        if ($children == "") {
-            $children = 0;
+        if ($child == "") {
+            $child = 0;
         }
         
         if ($isAC == "on") {
@@ -318,20 +317,20 @@
             $ac_value = 0;
         }
         
-        $receptionist->updateInquiry($inquiry_id, $room_type_id, $ac_value, $status, $receptionist_id, $checkin, $checkout, $adults, $children);
+        $receptionist->updateInquiry($inquiry_id, $room_type_id, $ac_value, $status, $receptionist_id, $checkin, $checkout, $adults, $child);
     }
 
     if(isset($_GET['failed'])) {
         echo'
             <script>
-                swal("Inquiry Update Failed!", "Something went wrong!", "error");
+                swal("Error", "Something went wrong. Inquiry update failed.", "error");
             </script>
         ';
     }
     if(isset($_GET['success'])) {
         echo'
             <script>
-                swal("Success!", "Inquiry Updated Successfully!", "success");
+                swal("Success", "Inquiry updated successfully.", "success");
             </script>
         ';
     }
